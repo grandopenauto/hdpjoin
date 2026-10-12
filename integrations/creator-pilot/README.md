@@ -29,7 +29,7 @@ https://hdpjoin.com/tools/agent-stack-cost/?src=creator&via=creator-code&variant
 1. The source value creator is allowed. The via code is a public HDP-issued slug (3–24 lowercase letters, numbers and hyphens) and variant is one of studio/store/general. The generator does **not** check a verified server registry; payments must not rely on self-entered codes.
 2. Consent-aware assets/site.js stores public creator attribution in sessionStorage only after opt-in consent, then adds creator_ref and campaign_variant to consented GA4 event metadata. Declining analytics doesn't prevent page access.
 3. Only consented HDP-bound links can gain utm_medium=creator, utm_campaign=creator_pilot and utm_content with the public code. Calculator input amounts, visitor identifiers, email and full raw URLs are not included in these custom GA4 events.
-4. assets/creators.js emits hdpjoin_creator_interest (allowlisted category) and hdpjoin_creator_kit_action (generate_link/copy_link/copy_caption) only after opt-in. These are interest indicators, not conversions. Existing aggregate CDK report doesn't yet count these event names; an approved collector allowlist change and real browser evidence are needed. GA4 custom dimensions for creator_ref and campaign_variant are not yet verified.
+4. assets/creators.js emits hdpjoin_creator_interest (allowlisted category) and hdpjoin_creator_kit_action (generate_link/copy_link/copy_caption) only after opt-in. These are interest indicators, not conversions. The private Google CDK reporter and SACO adapter now allowlist these two event names and display aggregate counts; actual new browser-generated creator events have not yet been field-verified. GA4 custom dimensions for creator_ref and campaign_variant are not yet verified.
 5. privacy/index.html discloses referral codes. Invitations open the visitor's mail application; there is no backend to store requests or send newsletters.
 
 Conversion ladder: public page interaction → consented HDP handoff → verified inquiry → discovery appointment → verified paid order → fulfilled result. Link clicks are not paid conversions or earned commissions. Material connections to creators require clear disclosures.
@@ -51,3 +51,15 @@ Conversion ladder: public page interaction → consented HDP handoff → verifie
 6. Enable no-cost store provisioning and creator accounts only after support/security/financial terms are validated.
 
 These static GitHub Pages changes do not mutate highestdegreepriorities.com, UltraHype services, SACO operator configuration, or private CDK credentials.
+
+## Oct 12, 2026 deployment verification
+
+Creator program pages, kit, scoped CSS/JS, on-site discovery links, optional campaign-source attribution, revised privacy notice and sitemap were committed to grandopenauto/hdpjoin on the default branch. GitHub Pages workflow 38230667128 completed successfully for the latest creator-pilot README commit. Web fetch through the browsing tool could not independently render the public pages, so full desktop/mobile visual and manual click/consent QA remains an explicit follow-up.
+
+VPSBridge **R50** read-only asset inventory: C:\HDP\Ultrahype folder and two UltraHype eBay Windows services exist and run; no proof of self-service free storefront hosting. Arcadian Tutorial Studio and SocialMediaScript_Rebuild v0.9 are prior prototypes and require independent runtime packaging.
+
+**R51** read-only reporter/SACO allowlist inspection; **R52** staged exact two-event addition, private dashboard rows and Python checks (DONE, exit 0); **R53** checksum-controlled production release with separate file backups and both GoogleAnalyticsCollector-CDK and HDP-SACO services restarted Running (DONE, exit 0); **R54** manually queried real Google APIs and verified reporter-to-SACO compatibility (DONE, exit 0). Creator-interest and kit-action aggregates are presently 0 for the complete 2026-10-05 to 2026-10-11 window, expected since pages were just deployed; current-day activity and downstream conversion are **not** proven. Existing analytics.fetch unaffected and existing SAG/Google credentials untouched. Backups:
+- C:\HDP\GoogleAnalyticsCollector-CDK\backups\hdpjoin_report.py.pre_creator_20261012.bak
+- C:\HDP\SACO\backups\google_analytics_adapter.pre_creator_20261012.bak
+
+Need real consented browser tests of /creators/ and /creators/kit/, on-site route, approved creator code and actual email request before treating any analytics, signup or referral as field-proven. Email CTA is mailto only; no direct signup backend, creator code activation or monetary incentives.
