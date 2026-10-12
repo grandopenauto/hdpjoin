@@ -1,0 +1,37 @@
+{
+  "schema": "hdpjoin.newsletter.integration-config",
+  "schema_version": 1,
+  "state": "NOT_CONNECTED",
+  "public_form_enabled": false,
+  "hosted_signup_url": null,
+  "recommended_provider": "HDP EmailAgent or compliant third-party list platform with double opt-in",
+  "required_features": [
+    "validated email input and privacy notice",
+    "consent evidence/version/timestamp",
+    "double opt-in confirmation and status",
+    "deduplicated subscriber records",
+    "unsubscribe in every marketing email",
+    "suppression and bounce handling",
+    "rate limiting/abuse protection",
+    "tenant isolation",
+    "minimum-privilege API credentials on backend",
+    "no direct browser SACO credential"
+  ],
+  "event_hooks": {
+    "request": "hdpjoin_newsletter_interest",
+    "subscription_confirmed": "newsletter_confirmed_SERVER_ONLY",
+    "unsubscribe": "newsletter_unsubscribed_SERVER_ONLY"
+  },
+  "current_fallback": "RSS feed plus mailto request; never claim subscribed",
+  "saco_proposed_adapter": {
+    "id": "hdpjoin_newsletter",
+    "state": "PLANNED_NOT_DEPLOYED",
+    "capabilities": [
+      "newsletter.opt_in_request",
+      "newsletter.subscription_status"
+    ],
+    "approval": "Customer confirmed consent required before active subscription",
+    "write_actions": "Explicitly approved only; no cold-message campaign triggers"
+  },
+  "privacy": "No PII or raw emails in GA4, static GitHub Pages, SACO public query URLs or CrossDock Sheets"
+}
