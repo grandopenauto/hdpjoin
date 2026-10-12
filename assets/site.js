@@ -3,6 +3,21 @@
  const nav=document.getElementById("primaryNav"), menu=document.getElementById("menuToggle");
  menu?.addEventListener("click",()=>{const open=nav?.classList.toggle("open");menu.setAttribute("aria-expanded",String(Boolean(open)));});
  nav?.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>{nav.classList.remove("open");menu?.setAttribute("aria-expanded","false");}));
+ const hero=document.querySelector(".hero");
+ if(hero){
+   // Load the photographic replacement only after the WebP exists on Pages.
+   // A missing asset leaves the original illustrated hero fully functional.
+   const desktop=new Image();
+   desktop.onload=()=>{
+     hero.classList.add("photo-ready");
+     if(window.matchMedia("(max-width: 770px)").matches){
+       const mobile=new Image();
+       mobile.onload=()=>hero.classList.add("photo-mobile");
+       mobile.src="/assets/images/manifested-miracles-mobile.webp";
+     }
+   };
+   desktop.src="/assets/images/manifested-miracles-hero.webp";
+ }
  const choices={
   start:{title:"Explore an entire business model",detail:"See how business blueprints combine websites, customer acquisition, fulfillment and support. You can customize the package instead of buying every capability at once.",label:"Explore Business OS options",url:"https://www.highestdegreepriorities.com/?utm_source=hdpjoin&utm_medium=referral&utm_campaign=discovery_start#catalog"},
   task:{title:"Start with one useful task",detail:"You may only need one workflow check, website task, lead follow-up improvement or specialist deliverable. Start small and expand only when justified.",label:"Browse individual tasks",url:"https://www.highestdegreepriorities.com/tasks/?utm_source=hdpjoin&utm_medium=referral&utm_campaign=discovery_task"},
