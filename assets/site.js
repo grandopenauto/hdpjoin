@@ -36,7 +36,7 @@
  if(analyticsAllowed)beginAnalytics();
  const banner=document.getElementById("consentBanner");
  if(banner){banner.hidden=getStored()!==null;banner.querySelectorAll("[data-consent]").forEach(b=>b.addEventListener("click",()=>{
-    analyticsAllowed=b.dataset.consent==="yes";setStored(analyticsAllowed?"yes":"no");banner.hidden=true;if(analyticsAllowed)beginAnalytics();
+    const hadAnalytics=getStored()==="yes";analyticsAllowed=b.dataset.consent==="yes";setStored(analyticsAllowed?"yes":"no");banner.hidden=true;if(analyticsAllowed)beginAnalytics();else if(hadAnalytics)location.reload();
   }));}
  document.querySelectorAll("[data-track]").forEach(a=>a.addEventListener("click",()=>track("hdpjoin_navigation",{destination:a.dataset.track})));
  document.querySelectorAll("[data-analytics-settings]").forEach(b=>b.addEventListener("click",()=>{if(banner)banner.hidden=false;}));
