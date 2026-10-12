@@ -51,7 +51,7 @@
  if(analyticsAllowed)beginAnalytics();
  const banner=document.getElementById("consentBanner");
  if(banner){banner.hidden=getStored()!==null;banner.querySelectorAll("[data-consent]").forEach(b=>b.addEventListener("click",()=>{
-    const hadAnalytics=getStored()==="yes";analyticsAllowed=b.dataset.consent==="yes";setStored(analyticsAllowed?"yes":"no");banner.hidden=true;if(analyticsAllowed)beginAnalytics();else if(hadAnalytics)location.reload();
+    const hadAnalytics=getStored()==="yes";analyticsAllowed=b.dataset.consent==="yes";setStored(analyticsAllowed?"yes":"no");banner.hidden=true;if(analyticsAllowed){beginAnalytics();track("hdpjoin_visit_context",{content_area:contentArea(),entry_source:entrySource});}else if(hadAnalytics)location.reload();
   }));}
  // First-party event taxonomy: keep browser tracking consent-gated and free of personal data.
  const trackedDestinations=["www.highestdegreepriorities.com","highestdegreepriorities.com","saco.highestdegreepriorities.com","enterprisesystemsfactory.com"];
