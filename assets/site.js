@@ -33,7 +33,7 @@
    const h=document.createElement("h4"),p=document.createElement("p"),a=document.createElement("a");
    h.textContent=item.title;p.textContent=item.detail;a.className="btn btn-dark";a.href=item.url;a.textContent=item.label+" →";a.dataset.track="advisor_"+key;
    result.replaceChildren(h,p,a);result.hidden=false;
-   track("discovery_path_selected",{path:key});
+   track("discovery_path_selected",{path:key,content_area:contentArea(),entry_source:entrySource});
   }));
  }
  const STORAGE="hdpjoin.analytics-consent.v1";
@@ -53,7 +53,52 @@
  if(banner){banner.hidden=getStored()!==null;banner.querySelectorAll("[data-consent]").forEach(b=>b.addEventListener("click",()=>{
     const hadAnalytics=getStored()==="yes";analyticsAllowed=b.dataset.consent==="yes";setStored(analyticsAllowed?"yes":"no");banner.hidden=true;if(analyticsAllowed)beginAnalytics();else if(hadAnalytics)location.reload();
   }));}
- document.querySelectorAll("[data-track]").forEach(a=>a.addEventListener("click",()=>track("hdpjoin_navigation",{destination:a.dataset.track})));
+ // First-party event taxonomy: keep browser tracking consent-gated and free of personal data.
+ const trackedDestinations=["www.highestdegreepriorities.com","highestdegreepriorities.com","saco.highestdegreepriorities.com","enterprisesystemsfactory.com"];
+ const allowedEntrySources=new Set(["billboard","qr","linkedin","print","email","social","organic","direct"]);
+ const incomingSrc=new URLSearchParams(location.search).get("src");
+ const entrySource=allowedEntrySources.has(incomingSrc)?incomingSrc:"unspecified";
+ const safeLabel=v=>/^[a-z0-9_]{1,64}$/.test(v||"")?v:"other";
+ function contentArea(){
+   const path=location.pathname;
+   if(path.startsWith("/learn/"))return "learn";
+   if(path.startsWith("/updates/"))return "updates";
+   if(path.startsWith("/discover/"))return "discover";
+   if(path.startsWith("/tools/"))return "tools";
+   if(path.startsWith("/videos/"))return "videos";
+   return path==="/"?"home":"other";
+ }
+ if(analyticsAllowed)track("hdpjoin_visit_context",{content_area:contentArea(),entry_source:entrySource});
+ document.addEventListener("click",e=>{
+   const anchor=e.target.closest("a[href]");
+   if(!anchor)return;
+   const url=anchor.getAttribute("href")||"";
+   const label=safeLabel(anchor.dataset.track);
+   if(url.startsWith("mailto:")){
+     if(url.includes("HDPJoin%20Updates%20Opt-In%20Request")){
+       track("hdpjoin_newsletter_interest",{method:"email_request",content_area:contentArea(),entry_source:entrySource});
+     }else track("hdpjoin_contact_interest",{content_area:contentArea(),entry_source:entrySource});
+     return;
+   }
+   if(url.startsWith("#"))return;
+   let parsed;
+   try{parsed=new URL(url,location.href)}catch(_){return;}
+   const target=parsed.hostname.toLowerCase();
+   if(trackedDestinations.includes(target)){
+     let destination="other";
+     if(target==="enterprise"+"systemsfactory.com")destination="esf";
+     else if(target.startsWith("saco."))destination="saco";
+     else if(parsed.pathname.startsWith("/tasks/")||parsed.pathname.startsWith("/task/"))destination="tasks";
+     else if(parsed.pathname.startsWith("/business/")||parsed.hash==="#catalog")destination="business_os";
+     else destination="hdp_general";
+     track("hdpjoin_handoff",{destination,cta:label,content_area:contentArea(),entry_source:entrySource});
+   }else if(parsed.origin===location.origin&&anchor.dataset.track){
+     track("hdpjoin_content_click",{cta:label,content_area:contentArea(),entry_source:entrySource});
+   }else if(anchor.dataset.track){
+     track("hdpjoin_navigation",{destination:label,content_area:contentArea()});
+   }
+ });
+
  document.querySelectorAll("[data-analytics-settings]").forEach(b=>b.addEventListener("click",()=>{if(banner)banner.hidden=false;}));
  // Curated video embeds can be enabled only after a verified video ID is added to the markup.
  document.querySelectorAll("[data-youtube-id]").forEach(el=>{
