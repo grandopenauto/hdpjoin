@@ -51,3 +51,11 @@ Some visitors decline analytics. These events therefore measure opted-in browser
 - Live already: static HDPJoin front end, successful GitHub Pages build, desktop/mobile hero files, current GA4 consent gate, SACO generic read-side analytics adapter (per previous field receipt).
 - Added here: consent-aware safe-name HDPJoin funnel events, proposed SACO HDPJoin site contract.
 - Not yet verified live: SACO report filtered to HDPJoin; any new SACO manifest installed on Windows; Search Console access for hdpjoin.com; functional newsletter subscription backend; paid customer conversion.
+
+## Oct 11, 2026: actual SACO adapter contract verified
+
+VPSBridge read-only receipts R13/R14 confirmed the installed adapter at `C:\HDP\SACO\connectors\business_apps\google_analytics\adapter.py` currently exposes **only** `analytics.fetch`, reading the allowlisted top-level collector fields from `state.json`. Direct adapter smoke returned status=ok, read_only=True, source_service=HDP-GoogleAnalyticsCollector-CDK, last_decision=NOOP_UNCHANGED, settled_through=2026-10-09, last_error absent. An attempted `analytics.site.fetch` correctly returned `blocked`: the HDPJoin-specific capability is **not installed**.
+
+A GA4 API production query through the repaired collector confirmed `hdpjoin.com` with **2 sessions and 30 events** on October 11 (a preliminary daily count, not a conversion proof). The current SACO adapter cannot derive host-level counts from its `state.json` readout. Do not add public `site_key` filters to that readout and pretend it is an HDPJoin report. An approved private collector-side aggregate, with verified provenance and settled/date window, must be exported to a narrow trusted report first. Then an authorized SACO read capability may return the **aggregate** for a strictly allowlisted site with tenant access, audit and rate limits. Source credentials stay with the collector. Do not expose detailed HDP analytics to unrelated SACO tenants.
+
+GSC sites.list for the collector account returned HTTP 200 but does **not** list `sc-domain:hdpjoin.com` as of this check. Site owner must verify the domain and grant the appropriate restricted property access before direct-Google Search Console reports for HDPJoin are enabled. Do not confuse GA4 hostName presence with Search Console property ownership.
