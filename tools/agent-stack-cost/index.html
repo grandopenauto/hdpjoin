@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#152c4d"><meta name="color-scheme" content="light">
+<title>AI Agent Stack Cost Calculator | HDPJoin</title>
+<meta name="description" content="Estimate how marketplace commissions, payment processing, AI agents, voice calls, messages and software subscriptions stack onto each customer order.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="AI Agent Stack Cost Calculator | HDPJoin">
+<meta property="og:description" content="Estimate how marketplace commissions, payment processing, AI agents, voice calls, messages and software subscriptions stack onto each customer order.">
+<meta property="og:url" content="https://hdpjoin.com/tools/agent-stack-cost/">
+<meta property="og:site_name" content="HDPJoin">
+<link rel="canonical" href="https://hdpjoin.com/tools/agent-stack-cost/">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="alternate" type="application/rss+xml" title="HDPJoin Insights RSS" href="/feed.xml">
+<link rel="stylesheet" href="/assets/site.css">
+<script defer src="/assets/site.js"></script>
+<link rel="stylesheet" href="/assets/calculator.css">
+<script defer src="/assets/calculator.js"></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"HDPJoin","url":"https://hdpjoin.com/","description":"HDPJoin is the discovery and education front door for Highest Degree Priorities.","publisher":{"@type":"Organization","name":"Highest Degree Priorities","url":"https://www.highestdegreepriorities.com/"}}</script>
+</head><body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="notice-strip">A shorter way to discover what's possible with <a href="https://www.highestdegreepriorities.com/?utm_source=hdpjoin&utm_medium=referral&utm_campaign=homepage" data-track="brand_hdp">Highest Degree Priorities ↗</a></div>
+<header class="site-header"><div class="container nav">
+ <a class="brand" href="/" aria-label="HDPJoin home"><span class="brand-icon">H°</span><span><span class="brand-title">HDPJOIN<span style="color:#d6a454">.</span></span><span class="brand-subtitle">by Highest Degree Priorities</span></span></a>
+ <button id="menuToggle" class="menu-toggle" type="button" aria-controls="primaryNav" aria-expanded="false">☰ Menu</button>
+ <nav id="primaryNav" class="navlinks" aria-label="Main navigation"><a href="/discover/"  data-track="nav_discover">Discover</a><a href="/learn/" aria-current="page" data-track="nav_learn">Learn & compare</a><a href="/videos/"  data-track="nav_videos">Watch</a><a href="/updates/"  data-track="nav_updates">Get updates</a><a href="/about/"  data-track="nav_about">About</a><a class="nav-button" href="https://www.highestdegreepriorities.com/?utm_source=hdpjoin&utm_medium=referral&utm_campaign=homepage" data-track="nav_hdp">Explore HDP ↗</a></nav>
+</div></header>
+<main id="main"><section class="page-hero"><div class="container"><div class="breadcrumb"><a href="/">HDPJoin</a> / <a href="/learn/">Learn</a> / Agent Stack Cost Calculator</div><div class="eyebrow">Interactive economics · No account needed</div><h1>How much does your AI transaction stack really cost?</h1><p>When a simple order passes through marketplaces, AI agents, voice services, messages and payment processors, the layers can add up. Change the assumptions to see where the money goes.</p></div></section>
+<section class="page-main"><div class="container">
+  <div class="calculator-head"><div><span class="eyebrow">Configure the hypothetical order</span><h2>One order. Multiple layers.</h2><p>These are <strong>illustrative editable assumptions</strong>, not verified prices from any named provider. The calculator runs entirely in your browser and does not submit your values.</p></div><div class="calc-label">Example model · USD</div></div>
+  <div class="calc-layout" id="stackCalculator">
+    <form class="calc-inputs" id="stackForm" autocomplete="off" onsubmit="return false">
+      <fieldset class="calc-fieldset"><legend>Order basics</legend>
+        <div class="calc-grid">
+          <label>Order value ($)<input type="number" id="orderValue" min="0.01" max="1000000" step="0.01" value="15" required></label>
+          <label>Orders per month<input type="number" id="orderCount" min="1" max="10000000" step="1" value="500" required></label>
+          <label>Gross margin before these fees (%)<input type="number" id="grossMargin" min="0" max="100" step="0.1" value="40" required></label>
+          <label>Monthly software subscriptions ($)<input type="number" id="monthlyFixed" min="0" max="1000000" step="0.01" value="100" required></label>
+        </div>
+      </fieldset>
+      <fieldset class="calc-fieldset"><legend>Transaction and agent layers</legend><p>Select what applies and change each cost. A marketplace commission and payment fee may overlap or be bundled depending on the provider agreement.</p>
+        <div class="layer-row"><label class="check-name"><input type="checkbox" id="marketplaceEnabled" checked> Marketplace commission</label><label>Percent of sale (%)<input type="number" id="marketplacePercent" min="0" max="100" step="0.1" value="15"></label></div>
+        <div class="layer-row"><label class="check-name"><input type="checkbox" id="processorEnabled" checked> Payment processing</label><div class="dual"><label>Percent (%)<input type="number" id="processorPercent" min="0" max="100" step="0.1" value="2.9"></label><label>Fixed per order ($)<input type="number" id="processorFixed" min="0" max="10000" step="0.01" value="0.3"></label></div></div>
+        <div class="layer-row"><label class="check-name"><input type="checkbox" id="agentEnabled" checked> AI model / agent requests</label><label>Cost per order ($)<input type="number" id="agentUnit" min="0" max="10000" step="0.01" value="0.08"></label></div>
+        <div class="layer-row"><label class="check-name"><input type="checkbox" id="orchestrationEnabled" checked> Automation / routing layer</label><label>Cost per order ($)<input type="number" id="orchestrationUnit" min="0" max="10000" step="0.01" value="0.05"></label></div>
+        <div class="layer-row"><label class="check-name"><input type="checkbox" id="voiceEnabled" checked> Voice / telephony</label><label>Cost per order ($)<input type="number" id="voiceUnit" min="0" max="10000" step="0.01" value="0.2"></label></div>
+        <div class="layer-row"><label class="check-name"><input type="checkbox" id="smsEnabled" checked> Text or notification service</label><label>Cost per order ($)<input type="number" id="smsUnit" min="0" max="10000" step="0.01" value="0.03"></label></div>
+      </fieldset>
+      <div class="calc-buttons"><button id="resetCosts" class="btn btn-outline" type="button">Reset example</button><button id="copyCosts" class="btn btn-dark" type="button">Copy scenario summary ↗</button></div>
+      <p class="calc-notice" id="calcNotice" role="status" aria-live="polite">Edit any value to recalculate. No data is sent to a server.</p>
+    </form>
+    <section class="calc-results" aria-label="Calculated economics">
+      <div class="eyebrow">Estimated cost of your stack</div><div class="calc-stats">
+        <div class="calc-stat"><span>Technology cost / order</span><strong id="costPerOrder">$0.00</strong></div>
+        <div class="calc-stat"><span>Technology fee share of revenue</span><strong id="techPercent">0%</strong></div>
+        <div class="calc-stat"><span>Technology spend / month</span><strong id="totalMonthly">$0.00</strong></div>
+        <div class="calc-stat"><span>Remaining gross profit / month</span><strong id="remainingMonthly">$0.00</strong></div>
+      </div>
+      <h3>Cost distribution per order</h3><div class="calc-bars" id="costBars"></div>
+      <div class="calc-equation"><b>How it's calculated</b><p id="formulaExplanation">Loading calculations…</p></div>
+      <p id="lossWarning" class="calc-warning" hidden></p>
+      <p class="calc-foot">Gross margin is entered before modeled technology costs. Net operating profit is not calculated; taxes, overhead, returns, advertising, labor and other expenses are excluded unless you include them in your assumptions.</p>
+    </section>
+  </div>
+  <div class="prose" style="margin:60px 0 0">
+    <h2>Why small fees become large decisions</h2>
+    <p>Imagine a $15 food order routed through a marketplace and multiple AI layers. A few cents for models and messages may be minor compared with a percentage marketplace commission, but every recurring charge deserves to be counted. A $100 monthly platform subscription costs $1 per order at 100 monthly orders, and $0.10 at 1,000 orders.</p>
+    <h2>Don't double-count bundled fees</h2>
+    <p>Some platforms include payment processing, model usage or messaging in their pricing. Others charge them separately, through different vendors, or on different bases. Check provider invoices and terms before treating every possible layer as an extra charge.</p>
+    <h2>How to use this in a buying decision</h2>
+    <ol><li>Replace illustrative numbers with actual quotes and invoices.</li><li>Turn off layers already covered by a bundle or not used in your real process.</li><li>Calculate the cost at both your expected order volume and a low-volume case.</li><li>Include failure recovery, human escalations and vendor minimum charges in your operational plan.</li><li>Compare the same customer outcome with simpler architecture, a consolidated vendor and a managed operating service.</li></ol>
+    <blockquote>The cheapest API call is not necessarily the cheapest business process. The meaningful number is the cost of a correctly completed customer outcome.</blockquote>
+    <p>Next: read <a href="/learn/build-buy-operate/">Build It, Buy It, or Have Someone Operate It?</a>, browse <a href="/discover/">the Discovery guide</a>, or review <a href="https://www.highestdegreepriorities.com/?utm_source=hdpjoin&amp;utm_medium=referral&amp;utm_campaign=calculator#catalog">HDP's Business OS packages</a>.</p>
+  </div>
+</div></section></main>
+<footer class="site-footer"><div class="container">
+<div class="footer-grid">
+ <div><a class="brand" href="/" style="color:#fff;font-size:17px;font-weight:900">HDPJOIN<span style="color:#e3b668">.</span></a><p>Manifested Miracles.<br>Explore, understand, build, operate and expand—with purpose.</p><p>A discovery and education site by Highest Degree Priorities.</p></div>
+ <div><h3>Start here</h3><a href="/discover/">Discover your direction</a><a href="/learn/">Guides & comparisons</a><a href="/videos/">Watch & demos</a><a href="/updates/">Newsletter & RSS</a></div>
+ <div><h3>Explore HDP</h3><a href="https://www.highestdegreepriorities.com/?utm_source=hdpjoin&utm_medium=referral&utm_campaign=launchpad#catalog">Business Operating Systems</a><a href="https://www.highestdegreepriorities.com/tasks/?utm_source=hdpjoin&utm_medium=referral&utm_campaign=single_task">Individual Tasks</a><a href="https://www.highestdegreepriorities.com/about/?utm_source=hdpjoin&utm_medium=referral&utm_campaign=about">About HDP</a><a href="https://www.highestdegreepriorities.com/si8is/">SI∞IƧ philosophy</a></div>
+ <div><h3>Information</h3><a href="/about/">About HDPJoin</a><a href="/privacy/">Privacy & updates</a><a href="/feed.xml">RSS feed</a><a href="mailto:contact@highestdegreepriorities.com?subject=HDPJoin%20Inquiry">Contact</a><button data-analytics-settings type="button" style="padding:0;color:#c5d4e6;border:0;background:transparent;font-size:12px;text-align:left;text-decoration:underline">Analytics preferences</button></div>
+</div><div class="footer-bottom"><span>© 2026 Highest Degree Priorities · HDPJoin</span><span>Built to make the next step clearer, not more complicated.</span></div>
+</div></footer>
+<div class="cookie-banner" id="consentBanner" hidden><p><strong>Analytics choice.</strong> We can measure anonymous visit patterns to improve these guides. Analytics are off unless you choose to allow them. <a href="/privacy/">Privacy details</a>.</p><div class="cookie-actions"><button data-consent="no" class="secondary" type="button">Not now</button><button data-consent="yes" type="button">Allow analytics</button></div></div>
+</body></html>
