@@ -47,7 +47,22 @@
    window.gtag("js",new Date());window.gtag("config","G-2ZD9GMMZ36",{anonymize_ip:true,allow_google_signals:false,allow_ad_personalization_signals:false});
    const s=document.createElement("script");s.async=true;s.src="https://www.googletagmanager.com/gtag/js?id=G-2ZD9GMMZ36";document.head.appendChild(s);
  }
- function track(name,details){if(analyticsAllowed&&typeof window.gtag==="function")window.gtag("event",name,details||{});}
+ // Public creator campaign code is stored only after analytics consent, within this tab session.
+ function creatorAttribution(){
+   if(!analyticsAllowed)return {};
+   const query=new URLSearchParams(location.search),incoming=query.get("via")||"",src=query.get("src")||"";
+   const good=/^[a-z0-9][a-z0-9-]{2,23}$/.test(incoming);
+   const variant=["studio","store","general"].includes(query.get("variant"))?query.get("variant"):"general";
+   if(src==="creator"&&good){try{sessionStorage.setItem("hdpjoin.creator-ref.v1",JSON.stringify({creator_ref:incoming,campaign_variant:variant}))}catch(_){}}
+   try{
+     const saved=JSON.parse(sessionStorage.getItem("hdpjoin.creator-ref.v1")||"null");
+     if(saved&&/^[a-z0-9][a-z0-9-]{2,23}$/.test(saved.creator_ref)){
+       return {creator_ref:saved.creator_ref,campaign_variant:["studio","store","general"].includes(saved.campaign_variant)?saved.campaign_variant:"general"};
+     }
+   }catch(_){}
+   return {};
+ }
+ function track(name,details){if(analyticsAllowed&&typeof window.gtag==="function")window.gtag("event",name,Object.assign({},creatorAttribution(),details||{}));}
  if(analyticsAllowed)beginAnalytics();
  const banner=document.getElementById("consentBanner");
  if(banner){banner.hidden=getStored()!==null;banner.querySelectorAll("[data-consent]").forEach(b=>b.addEventListener("click",()=>{
@@ -55,12 +70,13 @@
   }));}
  // First-party event taxonomy: keep browser tracking consent-gated and free of personal data.
  const trackedDestinations=["www.highestdegreepriorities.com","highestdegreepriorities.com","saco.highestdegreepriorities.com","enterprisesystemsfactory.com"];
- const allowedEntrySources=new Set(["billboard","qr","linkedin","print","email","social","organic","direct"]);
+ const allowedEntrySources=new Set(["billboard","qr","linkedin","print","email","social","organic","direct","creator"]);
  const incomingSrc=new URLSearchParams(location.search).get("src");
  const entrySource=allowedEntrySources.has(incomingSrc)?incomingSrc:"unspecified";
  const safeLabel=v=>/^[a-z0-9_]{1,64}$/.test(v||"")?v:"other";
  function contentArea(){
    const path=location.pathname;
+   if(path.startsWith("/creators/"))return "creators";
    if(path.startsWith("/learn/"))return "learn";
    if(path.startsWith("/updates/"))return "updates";
    if(path.startsWith("/discover/"))return "discover";
@@ -84,6 +100,16 @@
    let parsed;
    try{parsed=new URL(url,location.href)}catch(_){return;}
    const target=parsed.hostname.toLowerCase();
+   // After explicit analytics consent, propagate only an issued public code to HDP.
+   if((target==="www.highestdegreepriorities.com"||target==="highestdegreepriorities.com")&&analyticsAllowed){
+     const creator=creatorAttribution();
+     if(creator.creator_ref){
+       parsed.searchParams.set("utm_medium","creator");
+       parsed.searchParams.set("utm_campaign","creator_pilot");
+       parsed.searchParams.set("utm_content",creator.creator_ref);
+       anchor.href=parsed.href;
+     }
+   }
    if(trackedDestinations.includes(target)){
      let destination="other";
      if(target==="enterprise"+"systemsfactory.com")destination="esf";
