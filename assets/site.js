@@ -1,0 +1,55 @@
+/* HDPJoin discovery navigation, consent-aware analytics and editorial interactions. */
+(()=>{"use strict";
+ const nav=document.getElementById("primaryNav"), menu=document.getElementById("menuToggle");
+ menu?.addEventListener("click",()=>{const open=nav?.classList.toggle("open");menu.setAttribute("aria-expanded",String(Boolean(open)));});
+ nav?.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>{nav.classList.remove("open");menu?.setAttribute("aria-expanded","false");}));
+ const choices={
+  start:{title:"Explore an entire business model",detail:"See how business blueprints combine websites, customer acquisition, fulfillment and support. You can customize the package instead of buying every capability at once.",label:"Explore Business OS options",url:"https://www.highestdegreepriorities.com/#catalog?utm_source=hdpjoin&utm_medium=referral&utm_campaign=discovery_start"},
+  task:{title:"Start with one useful task",detail:"You may only need one workflow check, website task, lead follow-up improvement or specialist deliverable. Start small and expand only when justified.",label:"Browse individual tasks",url:"https://www.highestdegreepriorities.com/tasks/?utm_source=hdpjoin&utm_medium=referral&utm_campaign=discovery_task"},
+  existing:{title:"Improve the business you already operate",detail:"First identify the bottleneck: lead intake, handoffs, sales, information flow or fulfillment. Then choose focused improvements or broader operating infrastructure.",label:"Evaluate your next improvement",url:"/learn/automation-readiness/"},
+  learn:{title:"Learn the basics before choosing",detail:"Explore plain-English comparisons that help you decide between a task, software tools and a connected operating system.",label:"Read the practical guides",url:"/learn/"}
+ };
+ const advisor=document.querySelector("[data-advisor]");
+ if(advisor){
+  const result=document.getElementById("advisorResult");
+  advisor.querySelectorAll("[data-advisor-choice]").forEach(b=>b.addEventListener("click",()=>{
+   const key=b.dataset.advisorChoice,item=choices[key];if(!item)return;
+   advisor.querySelectorAll("[data-advisor-choice]").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));
+   const h=document.createElement("h4"),p=document.createElement("p"),a=document.createElement("a");
+   h.textContent=item.title;p.textContent=item.detail;a.className="btn btn-dark";a.href=item.url;a.textContent=item.label+" →";a.dataset.track="advisor_"+key;
+   result.replaceChildren(h,p,a);result.hidden=false;
+   track("discovery_path_selected",{path:key});
+  }));
+ }
+ const STORAGE="hdpjoin.analytics-consent.v1";
+ function setStored(value){try{localStorage.setItem(STORAGE,value)}catch(_){}}
+ function getStored(){try{return localStorage.getItem(STORAGE)}catch(_){return null}}
+ let analyticsAllowed=getStored()==="yes";
+ function beginAnalytics(){
+   if(!analyticsAllowed||window.__hdpjGtagLoaded)return;
+   window.__hdpjGtagLoaded=true;window.dataLayer=window.dataLayer||[];
+   window.gtag=window.gtag||function(){window.dataLayer.push(arguments)};
+   window.gtag("js",new Date());window.gtag("config","G-2ZD9GMMZ36",{anonymize_ip:true,allow_google_signals:false,allow_ad_personalization_signals:false});
+   const s=document.createElement("script");s.async=true;s.src="https://www.googletagmanager.com/gtag/js?id=G-2ZD9GMMZ36";document.head.appendChild(s);
+ }
+ function track(name,details){if(analyticsAllowed&&typeof window.gtag==="function")window.gtag("event",name,details||{});}
+ if(analyticsAllowed)beginAnalytics();
+ const banner=document.getElementById("consentBanner");
+ if(banner){banner.hidden=getStored()!==null;banner.querySelectorAll("[data-consent]").forEach(b=>b.addEventListener("click",()=>{
+    analyticsAllowed=b.dataset.consent==="yes";setStored(analyticsAllowed?"yes":"no");banner.hidden=true;if(analyticsAllowed)beginAnalytics();
+  }));}
+ document.querySelectorAll("[data-track]").forEach(a=>a.addEventListener("click",()=>track("hdpjoin_navigation",{destination:a.dataset.track})));
+ document.querySelectorAll("[data-analytics-settings]").forEach(b=>b.addEventListener("click",()=>{if(banner)banner.hidden=false;}));
+ // Curated video embeds can be enabled only after a verified video ID is added to the markup.
+ document.querySelectorAll("[data-youtube-id]").forEach(el=>{
+  const id=el.dataset.youtubeId||"";
+  if(!/^[a-zA-Z0-9_-]{11}$/.test(id))return;
+  const button=el.querySelector("[data-load-video]");
+  button?.addEventListener("click",()=>{
+   const iframe=document.createElement("iframe");
+   iframe.src="https://www.youtube-nocookie.com/embed/"+id+"?autoplay=1";
+   iframe.className="responsive-embed";iframe.loading="lazy";iframe.allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";iframe.allowFullscreen=true;iframe.title=el.dataset.videoTitle||"HDPJoin video";
+   el.replaceChildren(iframe);track("video_play",{video:id});
+  });
+ });
+})();
