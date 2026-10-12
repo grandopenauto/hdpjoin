@@ -15,7 +15,7 @@ HDPJoin is **top-of-funnel discovery** for people who encountered a short addres
 - /learn/ai-receptionist-comparison/ — neutral capability comparison
 - /learn/build-buy-operate/ — build vs purchase vs outsource operations
 - /learn/automation-readiness/ — 10-item bounded process checklist
-- /learn/better-ai-systems-integration/ — seven-sign operational integration self-check and SI⁸ positioning
+- /learn/better-ai-systems-integration/ — seven-sign operational integration self-check and SI⁸ Business Operating Systems Architect & Operator positioning
 - /videos/ — existing public HDP voice demo; future approved click-to-load videos
 - /updates/ — email update request and RSS
 - /about/ — purpose, master brand connection and SI∞IƧ reference
