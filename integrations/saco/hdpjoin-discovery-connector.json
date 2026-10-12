@@ -1,0 +1,77 @@
+{
+  "schema": "hdpjoin.saco.connector-proposal",
+  "schema_version": 1,
+  "id": "hdpjoin_discovery_analytics",
+  "name": "HDPJoin Discovery Analytics",
+  "version": "0.1.0",
+  "deployment_status": "DESIGN_ONLY_NOT_REGISTERED_IN_SACO",
+  "business_purpose": "Provide consent-aware HDPJoin funnel analytics to authorized HDP services through SACO's existing read-only google_analytics connector backed by GoogleAnalyticsCollector-CDK.",
+  "source_site": "https://hdpjoin.com",
+  "ga4": {
+    "measurement_id": "G-2ZD9GMMZ36",
+    "property_id": "553736139",
+    "report_hostname": "hdpjoin.com",
+    "note": "Existing HDP property; verify GA4 hostname and conversion event collection in production, including www alias behavior."
+  },
+  "gsc": {
+    "site": "sc-domain:hdpjoin.com",
+    "state": "NOT_YET_VERIFIED_FOR_COLLECTOR",
+    "note": "Separate Search Console domain property; requires independent property creation/verification and service-account access."
+  },
+  "existing_connector": {
+    "id": "google_analytics",
+    "known_capability": "analytics.fetch",
+    "verified_prior_state": "LIVE_READ_ONLY_2026_10",
+    "new_site_mapping": "PENDING_VPS_OPERATOR_VERIFICATION"
+  },
+  "requested_capabilities": [
+    {
+      "name": "discovery.analytics.fetch",
+      "risk": "READ_ONLY",
+      "state": "PENDING",
+      "scope": "single hostname hdpjoin.com, aggregate metrics only, authorized tenants"
+    },
+    {
+      "name": "discovery.referrals.fetch",
+      "risk": "READ_ONLY",
+      "state": "PENDING",
+      "scope": "aggregate HDPJoin-to-HDP handoff counts; no identifying visitor data"
+    }
+  ],
+  "data_contract": {
+    "input": {
+      "site_key": "hdpjoin",
+      "window": "settled_28d",
+      "breakdown": [
+        "page",
+        "event",
+        "source",
+        "destination"
+      ]
+    },
+    "output": {
+      "site_key": "hdpjoin",
+      "settled_through": "YYYY-MM-DD",
+      "source": "GoogleAnalyticsCollector-CDK",
+      "event_totals": "counts by allowlisted event name",
+      "outbound_handoffs": "counts grouped by destination",
+      "privacy": "aggregate only; no raw IP, email, token, full URL query, or respondent data"
+    }
+  },
+  "adapter_controls": {
+    "execution_mode": "TRUSTED_READ_ONLY_ADAPTER_ONLY",
+    "browser_auth_credentials": "NEVER",
+    "tenant_isolation": "REQUIRED",
+    "rate_limits": "REQUIRED",
+    "provider_credentials": "OWNED_BY_CDK_NOT_SACO",
+    "audit": "REQUIRED",
+    "fail_closed_on_unknown_site": true
+  },
+  "operator_actions": [
+    "Confirm GA4 hostName breakdown includes hdpjoin.com",
+    "Confirm CDK direct-Google collector and latest successful receipt",
+    "Extend SACO analytics.fetch site allowlist only through approved VPS release",
+    "Perform authenticated read-only smoke tests and capture signed operator receipt",
+    "Promote connector state only after verified live response"
+  ]
+}
