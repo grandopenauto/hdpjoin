@@ -30,3 +30,40 @@
 @media(max-width:770px){.menu-toggle{display:block}.navlinks{display:none;position:absolute;top:78px;left:0;right:0;background:#fff;border-bottom:1px solid #dce4e9;padding:18px 22px;box-shadow:0 12px 25px rgba(19,40,67,.1);align-items:stretch;flex-direction:column;gap:16px}.navlinks.open{display:flex}.hero-grid,.feature-panel,.updates-cta,.content-layout{grid-template-columns:1fr}.hero{padding-top:60px}.sky-art{height:300px;max-width:470px;margin:auto}.value-strip-inner{grid-template-columns:1fr}.value-item{padding:15px 22px;border-right:0;border-bottom:1px solid #e2e8ed}.value-item:last-child{border:0}.flow{grid-template-columns:repeat(2,1fr)}.sidebox{position:static}.section{padding:65px 0}}
 @media(max-width:540px){.container{width:min(100% - 30px,1180px)}.hero{padding:45px 0 80px;min-height:0}.hero h1{font-size:clamp(40px,11vw,62px)}.hero .lead{font-size:17px}.hero .secondary{font-size:13px}.sky-art{height:205px;overflow:hidden}.sky-art .sun{top:-38px}.sky-art .ascend{height:220px;bottom:-48px}.sky-art .step{height:7px}.card-grid,.article-grid,.flow,.advisor-options{grid-template-columns:1fr}.advisor{padding:20px}.advisor-options button{min-height:0}.feature-panel,.updates-cta{padding:25px}.page-main{padding:55px 0}.page-hero{padding:55px 0}.rich-link{padding:19px}.footer-grid{grid-template-columns:1fr 1fr}.site-footer{padding:43px 0 22px}.cookie-banner{display:block}.cookie-actions{margin-top:15px}.btn-row>.btn{width:100%}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.article-card:hover{transform:none}}
+
+/* HDPJoin photo hero. Activated only when the matching WebP image loads.
+   Until then the working CSS sky/cloud artwork remains unchanged. */
+.hero.photo-ready{
+ background-image:linear-gradient(90deg,rgba(222,240,252,.16) 0%,rgba(229,245,253,.09) 35%,rgba(255,255,255,0) 68%),url("/assets/images/manifested-miracles-hero.webp");
+ background-size:cover;
+ background-repeat:no-repeat;
+ background-position:center center;
+}
+.hero.photo-ready::before{display:none}
+.hero.photo-ready .sky-art{opacity:0;pointer-events:none}
+.hero.photo-ready h1 em{
+ background:none;
+ -webkit-background-clip:initial;
+ -webkit-text-fill-color:#102847;
+ color:#102847;
+ -webkit-text-stroke:1px #0c2947;
+ filter:drop-shadow(1px 2px 0 rgba(255,239,208,.9));
+}
+.hero.photo-ready .hero-copy .lead{color:#16395c}
+.hero.photo-ready .hero-copy .secondary{color:#2e4e70}
+.hero.photo-ready .btn-light-outline{
+ background:rgba(255,255,255,.35);
+ color:#173650;
+ border-color:rgba(255,255,255,.92);
+ text-shadow:none;
+}
+@media(max-width:770px){
+ .hero.photo-ready{background-position:70% center}
+ .hero.photo-ready.photo-mobile{
+   background-image:linear-gradient(180deg,rgba(224,244,255,.17),rgba(255,255,255,.04)),url("/assets/images/manifested-miracles-mobile.webp");
+   background-position:center top;
+   background-size:cover;
+ }
+ .hero.photo-ready h1{font-size:clamp(42px,10.3vw,72px)}
+ .hero.photo-ready .hero-copy .lead{color:#113b5b}
+}
