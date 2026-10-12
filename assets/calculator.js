@@ -1,4 +1,4 @@
-(()=>{"use strict";const $=id=>document.getElementById(id),fmt=new Intl.NumberFormat("en-US",{style:"currency",currency:"USD",minimumFractionDigits:2,maximumFractionDigits:2}),pct=n=>(n*100).toLocaleString("en-US",{maximumFractionDigits:1})+"%";
+(()=>{"use strict";const $=id=>document.getElementById(id),fmt=new Intl.NumberFormat("en-US",{style:"currency",currency:"USD",minimumFractionDigits:2,maximumFractionDigits:2}),fmtUnit=new Intl.NumberFormat("en-US",{style:"currency",currency:"USD",minimumFractionDigits:2,maximumFractionDigits:4}),pct=n=>(n*100).toLocaleString("en-US",{maximumFractionDigits:1})+"%";
 const fields=["orderValue","orderCount","grossMargin","monthlyFixed","marketplacePercent","processorPercent","processorFixed","agentUnit","orchestrationUnit","voiceUnit","smsUnit"];
 const switches=["marketplaceEnabled","processorEnabled","agentEnabled","orchestrationEnabled","voiceEnabled","smsEnabled"];
 const defaults=Object.fromEntries([...fields,...switches].map(id=>[id,$(id).type==="checkbox"?$(id).checked:$(id).value]));
@@ -23,7 +23,7 @@ function render(){
  if(el){el.setAttribute("aria-disabled",String(disabled));el.querySelectorAll('input[type="number"]').forEach(x=>x.disabled=disabled);}
  }
  const o=calc();
- $("costPerOrder").textContent=fmt.format(o.sum);$("techPercent").textContent=pct(o.share);
+ $("costPerOrder").textContent=fmtUnit.format(o.sum);$("techPercent").textContent=pct(o.share);
  $("totalMonthly").textContent=fmt.format(o.monthly);
  $("remainingMonthly").textContent=fmt.format(o.remaining);
  $("remainingMonthly").classList.toggle("negative",o.remaining<0);
@@ -32,13 +32,13 @@ function render(){
  const group=document.createElement("div");
  const heading=document.createElement("div");heading.className="calc-bar-label";
  const name=document.createElement("span");name.textContent=e.name;
- const value=document.createElement("span");value.textContent=fmt.format(e.value);
+ const value=document.createElement("span");value.textContent=fmtUnit.format(e.value);
  heading.append(name,value);
  const track=document.createElement("div");track.className="calc-bar-track";
  const fill=document.createElement("div");fill.className="calc-bar-fill";fill.style.width=(e.value/max*100).toFixed(1)+"%";
  track.append(fill);group.append(heading,track);return group;
  }));
- $("formulaExplanation").textContent=fmt.format(o.sum)+" per order × "+o.count.toLocaleString("en-US")+" orders = "+fmt.format(o.monthly)+" monthly modeled technology cost. Estimated gross profit before modeled technology fees: "+fmt.format(o.gross)+".";
+ $("formulaExplanation").textContent=fmtUnit.format(o.sum)+" per order × "+o.count.toLocaleString("en-US")+" orders = "+fmt.format(o.monthly)+" monthly modeled technology cost. Estimated gross profit before modeled technology fees: "+fmt.format(o.gross)+".";
  const warn=$("lossWarning");
  warn.hidden=o.remaining>=0&&o.share<=1;
  if(!warn.hidden)warn.textContent=o.remaining<0?"Under these assumptions, modeled technology costs exceed gross profit before these fees. Simplify the stack or reassess pricing and margins.":"Under these assumptions, modeled fees exceed the order price. Review which layers are truly incremental.";
@@ -46,7 +46,7 @@ function render(){
 }
 function summary(){
  const o=calc();
- return ["HDPJoin · Illustrative Agent Stack Cost Scenario","NOT A PROVIDER QUOTE","Order value: "+fmt.format(o.price),"Orders per month: "+o.count,"Gross margin before modeled fees: "+pct(o.margin),"Monthly subscriptions: "+fmt.format(o.fixed),"","Per-order cost by layer:",...o.entries.map(e=>"- "+e.name+": "+fmt.format(e.value)),"","Modeled technology cost per order: "+fmt.format(o.sum),"Technology share of order: "+pct(o.share),"Monthly modeled technology spend: "+fmt.format(o.monthly),"Monthly gross profit remaining after modeled fees: "+fmt.format(o.remaining),"","Excluded: taxes, overhead, returns, acquisition, staff time and unmodeled expenses. Charges may be bundled—avoid double-counting."].join("\n");
+ return ["HDPJoin · Illustrative Agent Stack Cost Scenario","NOT A PROVIDER QUOTE","Order value: "+fmt.format(o.price),"Orders per month: "+o.count,"Gross margin before modeled fees: "+pct(o.margin),"Monthly subscriptions: "+fmt.format(o.fixed),"","Per-order cost by layer:",...o.entries.map(e=>"- "+e.name+": "+fmtUnit.format(e.value)),"","Modeled technology cost per order: "+fmtUnit.format(o.sum),"Technology share of order: "+pct(o.share),"Monthly modeled technology spend: "+fmt.format(o.monthly),"Monthly gross profit remaining after modeled fees: "+fmt.format(o.remaining),"","Excluded: taxes, overhead, returns, acquisition, staff time and unmodeled expenses. Charges may be bundled—avoid double-counting."].join("\n");
 }
 $("stackForm").addEventListener("input",render);
 $("stackForm").addEventListener("change",render);
