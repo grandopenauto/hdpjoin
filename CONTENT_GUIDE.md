@@ -59,3 +59,7 @@ No checkout and no customer-specific services are hosted on HDPJoin. The HDP Tas
 8. Actual HDP demo URLs are verified, and any third-party vendor links checked.
 9. Check Search Console ownership and indexing after publication.
 10. Validate billboard typography remains readable on small devices and at driving-distance impressions; avoid busy text.
+
+## SACO and CDK integration update
+
+See `integrations/saco/README.md` and the proposal manifests under `integrations/`. HDPJoin uses consent-gated client-side GA4 measurement. HDP-GoogleAnalyticsCollector-CDK is the authoritative direct-Google collector, and SACO's existing `google_analytics`/`analytics.fetch` capability is the read-only facade. The HDPJoin-specific filter/adapter is specified but **not deployed**. Never send private keys, raw subscriber emails or arbitrary browser input to SACO. HDPJoin's public SACO discovery entry is `/connect/`.
