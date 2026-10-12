@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+<title>HDPJoin — Practical Business Intelligence</title>
+<link>https://hdpjoin.com/</link>
+<description>Plain-English guides, comparisons and practical perspectives on AI-powered business operating systems by Highest Degree Priorities.</description>
+<language>en-us</language><lastBuildDate>Sun, 11 Oct 2026 20:00:00 GMT</lastBuildDate>
+<atom:link href="https://hdpjoin.com/feed.xml" rel="self" type="application/rss+xml"/>
+<item><title>What Should You Automate First? A Readiness Checklist</title><link>https://hdpjoin.com/learn/automation-readiness/</link><guid isPermaLink="true">https://hdpjoin.com/learn/automation-readiness/</guid><pubDate>Sun, 11 Oct 2026 20:00:00 GMT</pubDate><description>Ten practical readiness questions for choosing a safe, useful and measurable first automation pilot.</description></item>
+<item><title>Build It, Buy It, or Have Someone Operate It?</title><link>https://hdpjoin.com/learn/build-buy-operate/</link><guid isPermaLink="true">https://hdpjoin.com/learn/build-buy-operate/</guid><pubDate>Sun, 11 Oct 2026 20:00:00 GMT</pubDate><description>Compare software development, off-the-shelf tools and managed operations by total cost and operating responsibility.</description></item>
+<item><title>AI Receptionist vs Human Answering Service: A Practical Comparison</title><link>https://hdpjoin.com/learn/ai-receptionist-comparison/</link><guid isPermaLink="true">https://hdpjoin.com/learn/ai-receptionist-comparison/</guid><pubDate>Sun, 11 Oct 2026 20:00:00 GMT</pubDate><description>Compare coverage, judgment, escalation, privacy and cost structure without overpromising capabilities.</description></item>
+<item><title>One AI Task or a Complete Business OS? How to Decide</title><link>https://hdpjoin.com/learn/task-or-business-os/</link><guid isPermaLink="true">https://hdpjoin.com/learn/task-or-business-os/</guid><pubDate>Sun, 11 Oct 2026 20:00:00 GMT</pubDate><description>Choose a bounded task when possible and grow into a connected Business Operating System when the handoffs justify it.</description></item>
+</channel></rss>
