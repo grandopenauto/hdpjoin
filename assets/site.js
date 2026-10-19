@@ -76,6 +76,8 @@
  const safeLabel=v=>/^[a-z0-9_]{1,64}$/.test(v||"")?v:"other";
  function contentArea(){
    const path=location.pathname;
+   if(path.startsWith("/build-an-app/"))return "app_services";
+   if(path.startsWith("/seo-services/"))return "seo_services";
    if(path.startsWith("/creators/"))return "creators";
    if(path.startsWith("/learn/"))return "learn";
    if(path.startsWith("/updates/"))return "updates";
