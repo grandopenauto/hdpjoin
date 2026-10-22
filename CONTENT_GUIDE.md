@@ -10,6 +10,8 @@ HDPJoin is **top-of-funnel discovery** for people who encountered a short addres
 ## Site routes
 - / — billboard-friendly campaign landing with sky/clouds/sun graphic and clear visitor starting points
 - /discover/ — self-service selection of new business, single task, or existing-business improvement
+- /compare/ — software alternatives and workflow comparison index
+- /compare/sintra-ai-alternatives/ — documented Sintra AI comparison with no unsupported head-to-head benchmarks
 - /learn/ — editorial guide index
 - /learn/task-or-business-os/ — deciding between a bounded service and integrated operations
 - /learn/ai-receptionist-comparison/ — neutral capability comparison
@@ -43,7 +45,7 @@ The video page currently links to existing HDP public voice demo and voice confi
 site.js loads youtube-nocookie.com **only on viewer click**. Securely confirm video source, licensing and permission. Do not claim preview placeholders are playable.
 
 ## Publishing standards
-Prefer fewer original, substantial, helpful guides over mass-generated thin comparison pages. A comparison must state trade-offs, what was actually tested, specific limitations, vendor/source dates for changing facts, clear examples, and the relevance to a visitor's decision. Do not create competitor pages that imply partnerships or unverified prices. Avoid unsupported performance, revenue and superintelligence claims. Each article gets unique title, description, canonical, and Article JSON-LD; add sitemap/RSS items when published.
+Prefer fewer original, substantial, helpful guides over mass-generated thin comparison pages. A comparison must state trade-offs, what was actually tested, specific limitations, vendor/source dates for changing facts, clear examples, and the relevance to a visitor's decision. Do not create competitor pages that imply partnerships or unverified prices. Avoid unsupported performance, revenue and superintelligence claims. Each article gets unique title, description, canonical, and Article JSON-LD; add sitemap/RSS items when published. Compare vendor features against dated official documentation, disclose when products have not been tested hands-on, identify HDP claims as scoped/pilot where appropriate, and do not insinuate association with competitors.
 
 ## Activation and fulfillment
 No checkout and no customer-specific services are hosted on HDPJoin. The HDP Tasks/Business Launchpad and other specialist domains manage separate product discovery and potentially payment processing. Static landing buttons do not grant access or prove payment. Existing HDP Tasks $49 infrastructure does not imply every task is connected to checkout. Preserve approval rules and never bypass READY + approved queue requirements for VPSBridge.
