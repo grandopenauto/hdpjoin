@@ -12,6 +12,7 @@ HDPJoin is **top-of-funnel discovery** for people who encountered a short addres
 - /discover/ — self-service selection of new business, single task, or existing-business improvement
 - /compare/ — software alternatives and workflow comparison index
 - /compare/sintra-ai-alternatives/ — documented Sintra AI comparison with no unsupported head-to-head benchmarks
+- /compare/pipedrive-alternatives/ — Pipedrive vs HDP CRM and business operations comparison, including complement/integrate options
 - /learn/ — editorial guide index
 - /learn/task-or-business-os/ — deciding between a bounded service and integrated operations
 - /learn/ai-receptionist-comparison/ — neutral capability comparison
